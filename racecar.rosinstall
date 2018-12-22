@@ -1,4 +1,4 @@
 - setup-file: {local-name: /opt/ros/melodic/setup.sh}
 - git: {local-name: src/racecarx,        version: master,        uri: 'https://github.com/markbroerkens/RACECARX.git'}
-- git: {local-name: src/vesc,            version: master,        uri: 'https://github.com/mit-racecar/vesc.git'}
+- git: {local-name: src/vesc,            version: master,        uri: 'https://github.com/markbroerkens/RACECARX-vesc.git'}
 - git: {local-name: src/serial,          version: master,        uri: 'https://github.com/wjwwood/serial.git'}
