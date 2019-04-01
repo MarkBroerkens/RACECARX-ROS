@@ -3,4 +3,6 @@
 - git: {local-name: src/vesc,            version: master,        uri: 'https://github.com/markbroerkens/RACECARX-vesc.git'}
 - git: {local-name: src/serial,          version: master,        uri: 'https://github.com/wjwwood/serial.git'}
 - git: {local-name: src/rplidar_ros,     version: master,        uri: 'https://github.com/Slamtec/rplidar_ros'}
-- git: {local-name: src/razor_imu_9dof   version: melodic-devel  uri: 'https://github.com/MarkBroerkens/razor_imu_9dof.git'}
+- git: {local-name: src/razor_imu_9dof,  version: melodic-devel, uri: 'https://github.com/MarkBroerkens/razor_imu_9dof.git'}
+- git: {local-name: src/realsense,       version; 2.2.1,         uri: 'https://github.com/intel-ros/realsense.git'}
+
