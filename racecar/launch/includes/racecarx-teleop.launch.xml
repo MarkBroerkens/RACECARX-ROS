@@ -16,7 +16,9 @@
 
 
     <!-- Spawn MUXs -->
-    <include file="$(find racecar)/launch/mux.launch" />
+    <include file="$(find racecar)/launch/mux.launch">
+      <arg name="racecar_version" value="$(arg racecar_version)" />
+    </include>
 
     <!-- start electronic speed controller driver -->
     <include file="$(find racecar)/launch/includes/$(arg racecar_version)/vesc.launch.xml" >

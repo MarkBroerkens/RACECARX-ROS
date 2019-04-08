@@ -1,3 +1,4 @@
 <launch>
-	<node pkg="racecar" type="safety.py" name="Safety_Controller" />
+  <arg name="racecar_version" />
+  <node pkg="racecar" type="safety.py" name="Safety_Controller" />
 </launch>
