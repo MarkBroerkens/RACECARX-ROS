@@ -49,8 +49,10 @@ class Safety():
         self.angles = None
         self.bins = None
         self.averages = None
+	self.speed = 0.0
 
         self.sub = rospy.Subscriber("/scan", LaserScan, self.lidarCB, queue_size=1)
+	self.sub2 = rospy.Subscriber("/vesc/low_level/ackermann_cmd_mux/input/teleop", AckermannDriveStamped, self.speedCB, queue_size=1) 
         self.pub = rospy.Publisher("/vesc/low_level/ackermann_cmd_mux/input/safety",\
                 AckermannDriveStamped, queue_size =1 )
         self.thread = Thread(target=self.drive)
@@ -62,8 +64,8 @@ class Safety():
             if self.received_data is None or self.parsed_data is None:
                 rospy.sleep(0.5)
                 continue
-
-            if np.any(self.parsed_data['front'][:,0] < MIN_FRONT_DIST):
+            rospy.loginfo(self.speed)	    
+            if np.any(self.parsed_data['front'][:,0] < MIN_FRONT_DIST and self.speed > 0):
                 rospy.loginfo("stoping!")
                 # this is overkill to specify the message, but it doesn't hurt
                 # to be overly explicit
@@ -80,6 +82,9 @@ class Safety():
             # don't spin too fast
             rospy.sleep(.1)
 
+    def speedCB(self, msg):
+	self.speed = msg.drive.speed
+	
     def lidarCB(self, msg):
         # for performance, cache data that does not need to be recomputed on each iteration
         if not self.received_data:

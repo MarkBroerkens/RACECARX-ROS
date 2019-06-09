@@ -9,7 +9,7 @@
       <arg name="racecar_version" value="$(arg racecar_version)" />
     </include>
 
-     <!-- safety node -->
+    <!-- safety node -->
     <include file="$(find racecar)/launch/includes/$(arg racecar_version)/safety.launch.xml" >
       <arg name="racecar_version" value="$(arg racecar_version)" />
     </include>
@@ -33,5 +33,10 @@
    
   <!-- static transforms, e.g. base_link to imu -->
   <include file="$(find racecar)/launch/includes/$(arg racecar_version)/static_transforms.launch.xml" />
+
+
+  <!-- start camera -->
+  <include file="$(find racecar)/launch/includes/$(arg racecar_version)/rs_camera.launch.xml" />
+
 </launch>
 
