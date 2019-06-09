@@ -14,6 +14,11 @@
       <arg name="racecar_version" value="$(arg racecar_version)" />
     </include>
 
+    <!-- wall follower node -->
+    <include file="$(find racecar)/launch/includes/$(arg racecar_version)/wall_follower.launch.xml" >
+      <arg name="racecar_version" value="$(arg racecar_version)" />
+    </include>
+
 
     <!-- Spawn MUXs -->
     <include file="$(find racecar)/launch/mux.launch">

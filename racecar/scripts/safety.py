@@ -2,6 +2,7 @@
 import rospy
 from sensor_msgs.msg import LaserScan
 from std_msgs.msg import String, Header
+from nav_msgs.msg import Odometry
 from ackermann_msgs.msg import AckermannDriveStamped, AckermannDrive
 from threading import Thread #imsosorry
 
@@ -37,7 +38,7 @@ float32[] intensities # intensity data [device-specific units]. If your
 
 """
 
-MIN_FRONT_DIST = 1.0 # meters
+MIN_FRONT_DIST = 0.5 # meters
 FAN_ANGLE = 15.0 # angle that is considered the front
 N_BINS = 19
 
@@ -49,11 +50,13 @@ class Safety():
         self.angles = None
         self.bins = None
         self.averages = None
+	self.odomSpeed = 0.0
 	self.speed = 0.0
 
         self.sub = rospy.Subscriber("/scan", LaserScan, self.lidarCB, queue_size=1)
-	self.sub2 = rospy.Subscriber("/vesc/low_level/ackermann_cmd_mux/input/teleop", AckermannDriveStamped, self.speedCB, queue_size=1) 
-        self.pub = rospy.Publisher("/vesc/low_level/ackermann_cmd_mux/input/safety",\
+	self.sub2 = rospy.Subscriber("/vesc/low_level/ackermann_cmd_mux/output", AckermannDriveStamped, self.speedCB, queue_size=1) 
+        self.sub3 = rospy.Subscriber("/vesc/odom", Odometry, self.odomSpeedCB, queue_size=1) 
+	self.pub = rospy.Publisher("/vesc/low_level/ackermann_cmd_mux/input/safety",\
                 AckermannDriveStamped, queue_size =1 )
         self.thread = Thread(target=self.drive)
         self.thread.start()
@@ -65,7 +68,7 @@ class Safety():
                 rospy.sleep(0.5)
                 continue
             rospy.loginfo(self.speed)	    
-            if np.any(self.parsed_data['front'][:,0] < MIN_FRONT_DIST and self.speed > 0):
+            if np.any(self.parsed_data['front'][:,0] < MIN_FRONT_DIST and self.odomSpeed > 0.0):
                 rospy.loginfo("stoping!")
                 # this is overkill to specify the message, but it doesn't hurt
                 # to be overly explicit
@@ -82,9 +85,12 @@ class Safety():
             # don't spin too fast
             rospy.sleep(.1)
 
+    def odomSpeedCB(self, msg):
+	self.odomSpeed = msg.twist.twist.linear.x
+
     def speedCB(self, msg):
-	self.speed = msg.drive.speed
-	
+        self.speed = msg.drive.speed
+
     def lidarCB(self, msg):
         # for performance, cache data that does not need to be recomputed on each iteration
         if not self.received_data:

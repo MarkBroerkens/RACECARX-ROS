@@ -1,0 +1,4 @@
+<launch>
+  <arg name="racecar_version" />
+  <node pkg="racecar" type="wall_follower.py" name="Wall_Follower_Controller" />
+</launch>
