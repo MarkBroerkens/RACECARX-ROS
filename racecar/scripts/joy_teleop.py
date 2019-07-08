@@ -209,6 +209,9 @@ class JoyTeleop:
     def run_topic(self, c, joy_state):
         cmd = self.command_list[c]
         msg = self.get_message_type(cmd['message_type'])()
+        
+        # set the timestamp
+        self.set_member(msg, 'header.stamp', rospy.get_rostime())
 
         if 'message_value' in cmd:
             for param in cmd['message_value']:
