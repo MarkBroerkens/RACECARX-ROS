@@ -4,6 +4,6 @@
 - git: {local-name: src/serial,          version: master,        uri: 'https://github.com/wjwwood/serial.git'}
 - git: {local-name: src/rplidar_ros,     version: master,        uri: 'https://github.com/Slamtec/rplidar_ros'}
 - git: {local-name: src/razor_imu_9dof,  version: melodic-devel, uri: 'https://github.com/MarkBroerkens/razor_imu_9dof.git'}
-- git: {local-name: src/realsense,       version: 2.2.6,         uri: 'https://github.com/IntelRealSense/realsense-ros.git'}
+- git: {local-name: src/realsense,       version: 2.2.11,         uri: 'https://github.com/IntelRealSense/realsense-ros.git'}
 - git: {local-name: src/ddynamic_reconfigure, version: 0.2.0,    uri: 'https://github.com/pal-robotics/ddynamic_reconfigure.git'}
 
